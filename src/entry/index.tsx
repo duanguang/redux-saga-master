@@ -9,7 +9,7 @@ import {helloSaga} from "../action/sagas";
 import Counter from "../component/Counter";
 //sagaMiddleware.run(helloSaga)
 
-console.log(routes)
+
 ReactDOM.render(
     routes,
     document.getElementById('app')

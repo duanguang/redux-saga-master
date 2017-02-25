@@ -3,11 +3,13 @@
  */
 import {combineReducers} from 'redux';
 import {routerReducer} from 'react-router-redux';
+import todoIndex from "todoIndex";
 
 export interface IStoreState{
 
 }
 
 export const rootReducer=combineReducers({
+    todoIndex,
     routing: routerReducer,
 });//合并Reducer

@@ -7,13 +7,13 @@ import {hashHistory} from 'react-router';
 import {routerMiddleware} from 'react-router-redux';
 import {promiseMiddleware} from '../utils/redux';
 import {rootReducer} from "../reducer/rootReducer";
-
+import createSagaMiddleware from 'redux-saga'
 
 export const history:any = hashHistory;
 const reduxRouterMiddleware = routerMiddleware(hashHistory);
 let createStoreWithMiddleware;
 
-//export const sagaMiddleware = createSagaMiddleware();
+export const sagaMiddleware = createSagaMiddleware();
 
 
 if(process.env.NODE_ENV!=='production'){
@@ -21,13 +21,13 @@ if(process.env.NODE_ENV!=='production'){
         (<window>window).devToolsExtension ? (<window>window).devToolsExtension() : f => f
     ];
     createStoreWithMiddleware =compose(
-        applyMiddleware(reduxRouterMiddleware,thunkMiddleware,promiseMiddleware),
+        applyMiddleware(reduxRouterMiddleware,sagaMiddleware,promiseMiddleware),
         ...(devFuncs as any)
     )(createStore);//调用 applyMiddleware，使用 middleware 增强 createStore：
 }
 else {
     createStoreWithMiddleware = compose(
-        applyMiddleware(reduxRouterMiddleware,thunkMiddleware,promiseMiddleware)
+        applyMiddleware(reduxRouterMiddleware,sagaMiddleware,promiseMiddleware)
     )(createStore);//从右到左来组合多个函数。
 }
 

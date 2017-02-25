@@ -6,13 +6,13 @@ import {Provider} from 'react-redux';
 import {Router, Route, hashHistory,IndexRoute,Redirect} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
 import {store} from "../store/index";
-import {Counter} from "../component/Counter";
+import Counter from "component/Counter";
 import configureStore from "../store/configureStore";
 const history = syncHistoryWithStore(hashHistory, store);
 
 
 export const routes=(
-    <Provider store={configureStore({})}>
+    <Provider store={store}>
         <Router history={history}>
             <Route title="用户管理" path="/" component={Counter}>
             </Route>
