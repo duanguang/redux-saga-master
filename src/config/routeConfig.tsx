@@ -10,6 +10,7 @@ import Counter from "component/Counter";
 import configureStore from "../store/configureStore";
 const history = syncHistoryWithStore(hashHistory, store);
 
+export const action=type=>store.dispatch({type});
 
 export const routes=(
     <Provider store={store}>

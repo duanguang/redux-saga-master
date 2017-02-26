@@ -20,11 +20,24 @@ const initState:ITodoReducer={
     counterIndex:new CounterIndex()
 }
 
+/*function counterIndex(state:CounterIndex=initState.counterIndex,action:IActionGeneric<CounterIndex>):CounterIndex{
+    switch(action.type){
+        case ActionTypes.CHANGE_COUNT:
+            //return Object.assign({},action.payload);
+            return action.payload;
+        default:
+            return state;
+    }
+}*/
 function counterIndex(state:CounterIndex=initState.counterIndex,action:IActionGeneric<CounterIndex>):CounterIndex{
     switch(action.type){
         case ActionTypes.CHANGE_COUNT:
             //return Object.assign({},action.payload);
             return action.payload;
+        case 'INCREMENT':
+            console.log(state)
+            state.count=state.count+1;
+            return Object.assign({},state);
         default:
             return state;
     }

@@ -8,17 +8,18 @@ import {connect} from "react-redux";
 import Dispatch = Redux.Dispatch;
 import {ICounterStore} from "../reducer/todoIndex";
 import * as todoIndexActions from '../action/todoIndex';
+import {action} from "../config/routeConfig";
 interface ICounterPropsState{
     countIndex:CounterIndex
 }
 
 interface ICounterDispatchProps {
     onChangeCount?:(countIndex:CounterIndex)=>void;
+    onSagaIncrement?:()=>void;
 }
 
 @connect<ICounterPropsState,ICounterDispatchProps,void>(
     (state:ICounterStore)=>{
-console.log(state.todoIndex.counterIndex)
         return {
             countIndex:state.todoIndex.counterIndex,
         }
@@ -26,13 +27,13 @@ console.log(state.todoIndex.counterIndex)
     (dispatch:Dispatch)=>{
         return{
             onChangeCount:(countIndex:CounterIndex)=>dispatch(todoIndexActions.changeCount(countIndex)),
+            onSagaIncrement:()=>action('INCREMENT_ASYNC'),
         }
     }
 )
 export default class Counter extends React.Component<ICounterPropsState&ICounterDispatchProps,void>{
     constructor(props){
         super(props);
-        console.log(this.props)
     }
     onChange(countIndex:CounterIndex){
         this.props.onChangeCount&&this.props.onChangeCount(countIndex);
@@ -47,10 +48,11 @@ export default class Counter extends React.Component<ICounterPropsState&ICounter
     }
 
     increment(){
-        let count=this.props.countIndex.count;
-        let countIndex=new CounterIndex();
-        countIndex.count=count+1;
-        this.onChange(countIndex);
+       // let count=this.props.countIndex.count;
+       // let countIndex=new CounterIndex();
+        //countIndex.count=count+1;
+       // this.onChange(countIndex);
+        this.props.onSagaIncrement&&this.props.onSagaIncrement();
     }
 
     decrement(){
@@ -62,7 +64,6 @@ export default class Counter extends React.Component<ICounterPropsState&ICounter
     }
     render(){
         const {count} = this.props.countIndex;
-        console.log(this.props);
         return(
             <div>
                 1111

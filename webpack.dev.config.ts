@@ -32,12 +32,12 @@ module.exports={
                 include: /src/,
                 loader:'react-hot'
             },
-            /*{
+            {
                 test: /\.js?$/,
                 exclude: /(node_modules|typings)/,
                 include: /src/,
                 loader: 'babel'
-            },*/
+            },
             {
                 test: /\.json$/,
                 loader: 'json-loader'
@@ -58,6 +58,8 @@ module.exports={
     },
 
     plugins: [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.NoErrorsPlugin(),
 
         new webpack.optimize.CommonsChunkPlugin('common/core', 'common/core.js'),
         //new ExtractTextPlugin('styles.css'),
@@ -75,3 +77,4 @@ module.exports={
         new OpenBrowserPlugin({url: `http://localhost:8889`}),
     ]
 };
+
