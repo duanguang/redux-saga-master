@@ -38,6 +38,10 @@ function counterIndex(state:CounterIndex=initState.counterIndex,action:IActionGe
             console.log(state)
             state.count=state.count+1;
             return Object.assign({},state);
+        case 'DECREMENT':
+            console.log(state)
+            state.count=state.count-1;
+            return Object.assign({},state);
         default:
             return state;
     }
