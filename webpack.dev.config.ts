@@ -5,6 +5,14 @@ var webpack=require('webpack');
 var path=require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+var HappyPack = require('happypack'),
+    os = require('os'),
+    happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+
+/*var node_modules = path.resolve(__dirname, 'node_modules');
+var pathToReact = path.resolve(node_modules, 'react/react');
+var pathToReactDOM = path.resolve(node_modules,'react-dom/index');*/
+
 var entry={
     'common/core': ['react','react-dom', 'react-router', 'react-redux', 'react-router-redux',
         'redux-thunk'],
@@ -15,6 +23,7 @@ module.exports={
     entry:entry,
 
     resolve:{
+        root: path.resolve(__dirname,'src'),
         modulesDirectories: ['', 'src', 'node_modules', path.join(__dirname, '../node_modules')],
         extensions: ['', '.web.js', '.js', '.json']
     },
@@ -36,7 +45,9 @@ module.exports={
                 test: /\.js?$/,
                 exclude: /(node_modules|typings)/,
                 include: /src/,
-                loader: 'babel'
+                //loader: 'babel'
+                loader: 'HappyPack/loader?id=jsHappy'
+                //noParse: [pathToReact,pathToReactDOM]
             },
             {
                 test: /\.json$/,
@@ -62,6 +73,18 @@ module.exports={
         new webpack.NoErrorsPlugin(),
 
         new webpack.optimize.CommonsChunkPlugin('common/core', 'common/core.js'),
+
+        new HappyPack({
+            id: 'jsHappy',
+            cache: true,
+            threadPool: happyThreadPool,
+            loaders: [{
+                path: 'babel',
+                query: {
+                    cacheDirectory: '.webpack_cache'
+                }
+            }]
+        }),
         //new ExtractTextPlugin('styles.css'),
         new HtmlWebpackPlugin({
             inject: false,

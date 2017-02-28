@@ -22,7 +22,7 @@ compiler.plugin('compile', () => {
 });
 
 compiler.plugin('done', () => {
-    console.info(`Bundled in ${Date.now() - bundleStartTime} ms. ${new Date()}`);
+    console.info(`Bundled end in ${Date.now() - bundleStartTime} ms. ${new Date()}`);
 });
 
 var server = new WebpackDevServer(compiler, {
